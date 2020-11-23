@@ -8,23 +8,21 @@ import org.junit.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import pages.EventsPage;
-import pages.MainPage;
 import utils.BaseHooks;
 
 @Execution(ExecutionMode.CONCURRENT)
-public class UpcomingEventsTest extends BaseHooks {
-    MainPage mainPage = new MainPage();
+public class EventsInCanadaTest extends BaseHooks {
     EventsPage eventsPage = new EventsPage();
 
     @Test
     @Epic("Events.EPAM")
-    @Feature("Counter")
-    @Description("Compare upcoming events counter and all cards counter in the page")
-    public void upcomingEvents() {
-        mainPage.openMainPage();
-        mainPage.goToEvents();
-        eventsPage.clickUpcomingEvents();
+    @Feature("Past events filter")
+    @Description("Get past events by filter and compare cards count")
+    public void getCanadaEvents() {
+        eventsPage.open();
+        eventsPage.clickPastEvents();
+        eventsPage.filterByLocation();
         int cardsSize = eventsPage.getEventsCards().size();
-        Assert.assertEquals(Integer.toString(cardsSize), eventsPage.getEventsCounter());
+        Assert.assertEquals(Integer.toString(cardsSize), eventsPage.getPastEventsCounter());
     }
 }
