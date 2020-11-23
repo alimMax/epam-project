@@ -20,6 +20,7 @@
     <lombok.version>1.18.12</lombok.version>
     <aspectj.version>1.9.5</aspectj.version>
     <allure.version>2.13.2</allure.version>
+    <log4j.version>2.13.3</log4j.version>
     </properties>
 
     <dependencies>
@@ -71,6 +72,18 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
             <version>${allure.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
 
     </dependencies>
