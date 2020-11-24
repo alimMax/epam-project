@@ -10,7 +10,7 @@ import java.util.Locale;
 public class DateHelpers {
     Logger logger = LogManager.getLogger(DateHelpers.class);
 
-    public Boolean isDataValidCurrent(LocalDate date) {
+    public Boolean isDataEqualAndAfterCurrent(LocalDate date) {
         logger.info("Card date: " + date);
         return date.isEqual(LocalDate.now()) || date.isAfter(LocalDate.now());
     }

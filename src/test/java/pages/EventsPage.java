@@ -8,7 +8,7 @@ import java.util.List;
 
 public class EventsPage extends AbstractPage {
     String url = "https://events.epam.com/events";
-    By upcomingEvents = By.xpath("//a[@class='evnt-tab-link nav-link']");
+    By upcomingEvents = By.xpath("//span[@class='evnt-tab-text desktop'][text()='Upcoming events']");
     By pastEvents = By.xpath("//span[@class='evnt-tab-text desktop'][text()='Past Events']");
     By eventsCounter = By.xpath("//a[@class='evnt-tab-link nav-link']//span[@class='evnt-tab-counter evnt-label small white']");
     By pastEventsCounter = By.xpath("//a[@class='evnt-tab-link nav-link active']//span[@class='evnt-tab-counter evnt-label small white']");

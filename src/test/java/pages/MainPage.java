@@ -16,6 +16,7 @@ public class MainPage extends AbstractPage {
 
     String eventsEpamUrl = "https://events.epam.com";
     By eventsPage = By.xpath("//a[@class='nav-link'][@href='/events']");
+    By videoPage = By.xpath("//a[@class='nav-link'][text()='Video']");
 
     @Step("Main page")
     public void openMainPage() {
@@ -28,9 +29,16 @@ public class MainPage extends AbstractPage {
     @Step("Upcoming events page")
     public void goToEvents() {
         waitForElement(eventsPage).click();
-        waitForElement(By.xpath("//div[@class='evnt-card-wrapper']")).isDisplayed();
         Allure.addAttachment("Upcoming events",
                 new ByteArrayInputStream(((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES)));
         logger.info("Events page is opened");
+    }
+
+    @Step("Videos page")
+    public void goToVideo() {
+        waitForElement(videoPage).click();
+        Allure.addAttachment("Video page",
+                new ByteArrayInputStream(((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES)));
+        logger.info("Video page is opened");
     }
 }

@@ -32,7 +32,7 @@ public class EventDateTest extends BaseHooks {
         DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd MMM yyyy");
         LocalDate formattedDate = LocalDate.parse(cardDate, pattern);
 
-        Assert.assertTrue(dateHelpers.isDataValidCurrent(formattedDate));
+        Assert.assertTrue(dateHelpers.isDataEqualAndAfterCurrent(formattedDate));
         Assert.assertTrue(dateHelpers.isDateValidCurrentWeek(formattedDate));
 
 
