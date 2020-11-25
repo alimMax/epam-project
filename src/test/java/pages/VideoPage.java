@@ -19,6 +19,11 @@ public class VideoPage extends AbstractPage{
     By BelarusVariant = By.xpath("//label[@data-value='Belarus']");
     By englishVariant = By.xpath("//label[@data-value='ENGLISH']");
     By eventTalkCards = By.xpath("//div[@class='evnt-talk-card']");
+    By eventCardPageTitle = By.xpath("//div[@class='evnt-content-table']//h1[@class='evnt-talk-title']");
+    By search = By.xpath("//div[@class='evnt-search-filter']//input[@type='text']");
+    By videoCardPageLocation = By.xpath("//div[@class='evnt-talk-details location evnt-now-past-talk']//span");
+    By videoCardPageLang = By.xpath("//div[@class='evnt-talk-details language evnt-now-past-talk']//span");
+    By videoCardPageCategory = By.xpath("//div[@class='evnt-talk-details topics']");
 
     public void clickMoreFilters() {
         waitForElement(moreFilters).click();
@@ -62,9 +67,45 @@ public class VideoPage extends AbstractPage{
 
     public void checkAllVideoCards() {
         List<WebElement> cards = waitForElements(eventTalkCards);
-        for (WebElement card : cards) {
-            WebElement element = card.findElement(By.xpath(".//p[@class='language']"));
-            Assert.assertEquals("En", element.getText());
+        int cardsCount = cards.size();
+        for (int i=0; i<cardsCount; i++) {
+            JavascriptExecutor jse = (JavascriptExecutor)DriverManager.getDriver();
+            jse.executeScript("window.scrollBy(0, 800);");
+
+            waitForElements(eventTalkCards).get(i).click();
+            String location = waitForElement(videoCardPageLocation).getText();
+            Assert.assertTrue(location.contains("Belarus"));
+
+            String language = waitForElement(videoCardPageLang).getText();
+            Assert.assertTrue(language.contains("ENGLISH"));
+
+            String category = waitForElement(videoCardPageCategory).getText();
+            Assert.assertTrue(category.contains("Testing"));
+
+            DriverManager.getDriver().navigate().back();
+            waitForElement(By.xpath("//div[@class='evnt-card-body']//*[contains(text(), 'Community')]"));
+        }
+    }
+
+    public void searchByName(String name) {
+        WebElement searchElement = waitForElement(search);
+        searchElement.sendKeys(name);
+        waitForElement(By.xpath("//div[@class='evnt-card-body']//*[contains(text(), 'QA')]"));
+    }
+
+    public void checkCardsTitle(String name) {
+        List<WebElement> cards = waitForElements(eventTalkCards);
+        int cardsCount = cards.size();
+        for (int i=0; i<cardsCount; i++) {
+            JavascriptExecutor jse = (JavascriptExecutor)DriverManager.getDriver();
+            jse.executeScript("window.scrollBy(0, 800);");
+
+            waitForElements(eventTalkCards).get(i).click();
+            WebElement title = waitForElement(eventCardPageTitle);
+            Assert.assertTrue(title.getText().toLowerCase().contains(name.toLowerCase()));
+
+            DriverManager.getDriver().navigate().back();
+            waitForElement(By.xpath("//div[@class='evnt-card-body']//*[contains(text(), 'QA')]"));
         }
     }
 }

@@ -10,7 +10,7 @@ public class EventsPage extends AbstractPage {
     String url = "https://events.epam.com/events";
     By upcomingEvents = By.xpath("//span[@class='evnt-tab-text desktop'][text()='Upcoming events']");
     By pastEvents = By.xpath("//span[@class='evnt-tab-text desktop'][text()='Past Events']");
-    By eventsCounter = By.xpath("//a[@class='evnt-tab-link nav-link']//span[@class='evnt-tab-counter evnt-label small white']");
+    By eventsCounter = By.xpath("//li[@class='evnt-tab-item nav-item']//span[@class='evnt-tab-counter evnt-label small white']");
     By pastEventsCounter = By.xpath("//a[@class='evnt-tab-link nav-link active']//span[@class='evnt-tab-counter evnt-label small white']");
     By eventsCard = By.xpath("//div[@class='evnt-events-column cell-3']");
     By devopsWebinarCard = By.xpath("//a[@href='/events/devops-architecture-webinar']");
