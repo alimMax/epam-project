@@ -11,9 +11,32 @@ import pages.VideoPage;
 import utils.BaseHooks;
 
 @Execution(ExecutionMode.CONCURRENT)
-public class SearchVideoTest extends BaseHooks {
+public class VideoTest extends BaseHooks {
     MainPage mainPage = new MainPage();
     VideoPage videoPage = new VideoPage();
+
+    @Test
+    @Epic("Events.EPAM")
+    @Feature("Video filter")
+    @Description("Filtering video by parameters")
+    public void filterVideo() {
+        mainPage.openMainPage();
+        mainPage.goToVideo();
+        videoPage.clickMoreFilters();
+
+        videoPage.clickCategory();
+        videoPage.chooseTestingVariant();
+
+        videoPage.clickLocation();
+        videoPage.chooseBelarusVariant();
+        videoPage.clickLocation();
+
+        videoPage.clickLanguage();
+        videoPage.chooseEnglishVariant();
+        videoPage.clickLanguage();
+
+        videoPage.checkAllVideoCards();
+    }
 
     @Test
     @Epic("Events.EPAM")
@@ -26,5 +49,4 @@ public class SearchVideoTest extends BaseHooks {
         videoPage.searchByName("QA");
         videoPage.checkCardsTitle("QA");
     }
-
 }

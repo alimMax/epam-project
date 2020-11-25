@@ -5,8 +5,6 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -15,10 +13,24 @@ import pages.WebinarPage;
 import utils.BaseHooks;
 import utils.DriverManager;
 
-@Execution(ExecutionMode.CONCURRENT)
-public class DetailedInfoTest extends BaseHooks {
+import java.util.List;
+
+public class DetailedEventsTest extends BaseHooks {
     EventsPage eventsPage = new EventsPage();
     WebinarPage webinarPage = new WebinarPage();
+
+    @Test
+    @Epic("Events.EPAM")
+    @Feature("Past events filter")
+    @Description("Get past events by filter and compare cards count")
+    public void getCanadaEvents() {
+        eventsPage.open();
+        eventsPage.clickPastEvents();
+        eventsPage.filterByLocation();
+        List<WebElement> card = eventsPage.getEventsCards();
+        int cardsSize = card.size();
+        Assert.assertEquals(Integer.toString(cardsSize), eventsPage.getPastEventsCounter());
+    }
 
     @Test
     @Epic("Events.EPAM")
@@ -30,7 +42,7 @@ public class DetailedInfoTest extends BaseHooks {
         WebElement card = eventsPage.getDevopsWebinarCard().findElement(By.xpath(".//div[@class='evnt-card-body']"));
 
         // using JSExecutor
-        JavascriptExecutor jse = (JavascriptExecutor)DriverManager.getDriver();
+        JavascriptExecutor jse = (JavascriptExecutor) DriverManager.getDriver();
         jse.executeScript("window.scrollBy(894, 900)");
         card.click();
 

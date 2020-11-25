@@ -1,20 +1,36 @@
 package cases;
 
+import helpers.DateHelpers;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pages.EventsPage;
+import pages.MainPage;
 import utils.BaseHooks;
 
-@Execution(ExecutionMode.CONCURRENT)
-public class ReviewEventCardTest extends BaseHooks {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class EventsTest  extends BaseHooks {
+    MainPage mainPage = new MainPage();
     EventsPage eventsPage = new EventsPage();
+    DateHelpers dateHelpers = new DateHelpers();
+
+    @Test
+    @Epic("Events.EPAM")
+    @Feature("Counter")
+    @Description("Compare upcoming events counter and all cards counter in the page")
+    public void upcomingEvents() {
+        mainPage.openMainPage();
+        mainPage.goToEvents();
+        eventsPage.clickUpcomingEvents();
+        int cardsSize = eventsPage.getEventsCards().size();
+        Assert.assertEquals(Integer.toString(cardsSize), eventsPage.getEventsCounter());
+    }
 
     @Test
     @Epic("Events.EPAM")
@@ -40,5 +56,21 @@ public class ReviewEventCardTest extends BaseHooks {
         Assert.assertEquals("Registration opened", regStatus.getText());
         Assert.assertEquals("Aleksandr Chikovani", speakers.getAttribute("data-name"));
         Assert.assertEquals("EPAM, Senior Systems Engineer", speakers.getAttribute("data-job-title"));
+    }
+
+    @Test
+    @Epic("Events.EPAM")
+    @Feature("Date")
+    @Description("Validating upcoming events date")
+    public void validateDate() {
+        eventsPage.open();
+        eventsPage.clickUpcomingEvents();
+        String cardDate = eventsPage.getHRMeetupCard().findElement(By.xpath(".//span[@class='date']")).getText();
+
+        DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        LocalDate formattedDate = LocalDate.parse(cardDate, pattern);
+
+        Assert.assertTrue(dateHelpers.isDataEqualAndAfterCurrent(formattedDate));
+        Assert.assertTrue(dateHelpers.isDateValidCurrentWeek(formattedDate));
     }
 }

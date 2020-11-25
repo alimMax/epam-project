@@ -7,6 +7,7 @@
     <groupId>org.example</groupId>
     <artifactId>epam-project</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -62,6 +63,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
@@ -108,7 +116,6 @@
                         <include>**/*/*Test.java</include>
                     </includes>
                     <systemPropertyVariables>
-                        <application.properties>/application.properties</application.properties>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>
