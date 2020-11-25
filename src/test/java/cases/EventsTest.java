@@ -5,19 +5,22 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pages.EventsPage;
 import pages.MainPage;
-import utils.BaseHooks;
+import utils.DriverManager;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class EventsTest  extends BaseHooks {
-    MainPage mainPage = new MainPage();
-    EventsPage eventsPage = new EventsPage();
+@Execution(ExecutionMode.CONCURRENT)
+public class EventsTest  extends DriverManager {
+    MainPage mainPage;
+    EventsPage eventsPage;
     DateHelpers dateHelpers = new DateHelpers();
 
     @Test
@@ -25,6 +28,9 @@ public class EventsTest  extends BaseHooks {
     @Feature("Counter")
     @Description("Compare upcoming events counter and all cards counter in the page")
     public void upcomingEvents() {
+        mainPage = new MainPage(driver);
+        eventsPage = new EventsPage(driver);
+
         mainPage.openMainPage();
         mainPage.goToEvents();
         eventsPage.clickUpcomingEvents();
@@ -37,6 +43,8 @@ public class EventsTest  extends BaseHooks {
     @Feature("Card Info")
     @Description("Get event card info and compare with expectations")
     public void viewCardInfo() {
+        eventsPage = new EventsPage(driver);
+
         eventsPage.open();
         eventsPage.clickUpcomingEvents();
 
@@ -63,6 +71,8 @@ public class EventsTest  extends BaseHooks {
     @Feature("Date")
     @Description("Validating upcoming events date")
     public void validateDate() {
+        eventsPage = new EventsPage(driver);
+
         eventsPage.open();
         eventsPage.clickUpcomingEvents();
         String cardDate = eventsPage.getHRMeetupCard().findElement(By.xpath(".//span[@class='date']")).getText();

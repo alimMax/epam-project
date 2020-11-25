@@ -1,8 +1,8 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import utils.DriverManager;
 
 import java.util.List;
 
@@ -17,8 +17,12 @@ public class EventsPage extends AbstractPage {
     By hrMeetupCard = By.xpath("//a[@href='/events/hr-meetup-online']");
     By filterByLocation = By.xpath("//div[@id='filter_location']");
 
+    public EventsPage(WebDriver driver) {
+        super(driver);
+    }
+
     public void open() {
-        DriverManager.getDriver().get(url);
+        driver.get(url);
     }
 
     public void clickUpcomingEvents() {

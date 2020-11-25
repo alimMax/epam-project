@@ -3,23 +3,26 @@ package cases;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import pages.MainPage;
 import pages.VideoPage;
-import utils.BaseHooks;
+import utils.DriverManager;
 
 @Execution(ExecutionMode.CONCURRENT)
-public class VideoTest extends BaseHooks {
-    MainPage mainPage = new MainPage();
-    VideoPage videoPage = new VideoPage();
+public class VideoTest extends DriverManager {
+    MainPage mainPage;
+    VideoPage videoPage;
 
     @Test
     @Epic("Events.EPAM")
     @Feature("Video filter")
     @Description("Filtering video by parameters")
     public void filterVideo() {
+        mainPage = new MainPage(driver);
+        videoPage = new VideoPage(driver);
+
         mainPage.openMainPage();
         mainPage.goToVideo();
         videoPage.clickMoreFilters();
@@ -43,6 +46,9 @@ public class VideoTest extends BaseHooks {
     @Feature("Search video")
     @Description("Searching video by name")
     public void searchVideo() {
+        mainPage = new MainPage(driver);
+        videoPage = new VideoPage(driver);
+
         mainPage.openMainPage();
         mainPage.goToVideo();
 

@@ -21,18 +21,18 @@
     }
   },
   "firefox": {
-    "default": "78.0",
+    "default": "82.0",
     "versions": {
-      "77.0": {
-        "image": "selenoid/vnc_firefox:77.0",
+      "81.0": {
+        "image": "selenoid/vnc_firefox:81.0",
         "port": "4444",
         "path": "/wd/hub",
         "tmpfs": {
           "/tmp": "size=128m"
         }
       },
-      "78.0": {
-        "image": "selenoid/vnc_firefox:78.0",
+      "82.0": {
+        "image": "selenoid/vnc_firefox:82.0",
         "port": "4444",
         "path": "/wd/hub",
         "tmpfs": {

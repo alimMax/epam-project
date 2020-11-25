@@ -3,10 +3,10 @@ package pages;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.DriverManager;
 
 import java.util.List;
 
@@ -25,6 +25,10 @@ public class VideoPage extends AbstractPage{
     By videoCardPageLang = By.xpath("//div[@class='evnt-talk-details language evnt-now-past-talk']//span");
     By videoCardPageCategory = By.xpath("//div[@class='evnt-talk-details topics']");
 
+    public VideoPage(WebDriver driver) {
+        super(driver);
+    }
+
     public void clickMoreFilters() {
         waitForElement(moreFilters).click();
     }
@@ -42,11 +46,11 @@ public class VideoPage extends AbstractPage{
     }
 
     public void chooseTestingVariant() {
-        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), 10);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
         WebElement element = waitForElement(testingVariant);
         WebElement anotherElement = waitForElement(categoryButton);
-        JavascriptExecutor jse = (JavascriptExecutor)DriverManager.getDriver();
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
 
         // scroll to Testing variant
         jse.executeScript("arguments[0].scrollIntoView(true);", element);
@@ -69,7 +73,7 @@ public class VideoPage extends AbstractPage{
         List<WebElement> cards = waitForElements(eventTalkCards);
         int cardsCount = cards.size();
         for (int i=0; i<cardsCount; i++) {
-            JavascriptExecutor jse = (JavascriptExecutor)DriverManager.getDriver();
+            JavascriptExecutor jse = (JavascriptExecutor)driver;
             jse.executeScript("window.scrollBy(0, 800);");
 
             waitForElements(eventTalkCards).get(i).click();
@@ -82,7 +86,7 @@ public class VideoPage extends AbstractPage{
             String category = waitForElement(videoCardPageCategory).getText();
             Assert.assertTrue(category.contains("Testing"));
 
-            DriverManager.getDriver().navigate().back();
+            driver.navigate().back();
             waitForElement(By.xpath("//div[@class='evnt-card-body']//*[contains(text(), 'Community')]"));
         }
     }
@@ -97,14 +101,14 @@ public class VideoPage extends AbstractPage{
         List<WebElement> cards = waitForElements(eventTalkCards);
         int cardsCount = cards.size();
         for (int i=0; i<cardsCount; i++) {
-            JavascriptExecutor jse = (JavascriptExecutor)DriverManager.getDriver();
+            JavascriptExecutor jse = (JavascriptExecutor)driver;
             jse.executeScript("window.scrollBy(0, 800);");
 
             waitForElements(eventTalkCards).get(i).click();
             WebElement title = waitForElement(eventCardPageTitle);
             Assert.assertTrue(title.getText().toLowerCase().contains(name.toLowerCase()));
 
-            DriverManager.getDriver().navigate().back();
+            driver.navigate().back();
             waitForElement(By.xpath("//div[@class='evnt-card-body']//*[contains(text(), 'QA')]"));
         }
     }
