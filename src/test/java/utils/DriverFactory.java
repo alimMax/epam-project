@@ -14,7 +14,7 @@ public class DriverFactory {
 
     @SneakyThrows
     public static WebDriver createDriver(String platform) {
-        WebDriver driver = null;
+        WebDriver driver;
 
         switch (platform.toLowerCase()) {
             case "chrome":
