@@ -14,7 +14,7 @@ public class DriverFactory {
 
     @SneakyThrows
     public static WebDriver createDriver(String platform) {
-        WebDriver driver;
+        WebDriver driver = null;
 
         switch (platform.toLowerCase()) {
             case "chrome":
@@ -36,6 +36,7 @@ public class DriverFactory {
                 capabilities.setCapability("screenResolution", "1280x1024");
                 capabilities.setCapability("enableVideo", false);
                 capabilities.setCapability("enableLog", true);
+                capabilities.setCapability("timezone", "Asia/Almaty");
 
                 driver = new RemoteWebDriver(new URL(selenoidUrl), capabilities);
                 break;

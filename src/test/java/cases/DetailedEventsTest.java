@@ -54,7 +54,7 @@ public class DetailedEventsTest extends DriverManager {
         card.click();
 
         webinarPage.getRegButton().isDisplayed();
-        Assert.assertEquals("17 Dec 2020, 16:00 - 17:00", webinarPage.getEventDate().getText());
+        Assert.assertEquals("17 Dec 2020, 22:00 - 23:00", webinarPage.getEventDate().getText());
         Assert.assertEquals(
                 "Сделай сам без клея и ножниц, или конструктор для дата-платформы",
                 webinarPage.getTitle().getText()
