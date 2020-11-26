@@ -43,4 +43,14 @@ public class DriverFactory {
         }
         return driver;
     }
+
+    public static String getPlatform() {
+        String systemEnv = System.getProperty("platform");
+        if (systemEnv == null) {
+            return "chrome";
+        }
+        else {
+            return systemEnv;
+        }
+    }
 }

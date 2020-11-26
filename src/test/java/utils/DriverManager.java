@@ -11,7 +11,8 @@ public class DriverManager {
 
     @BeforeEach
     public void setupDriver() {
-        driver = DriverFactory.createDriver(System.getProperty("platform"));
+        String platform = DriverFactory.getPlatform();
+        driver = DriverFactory.createDriver(platform);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
