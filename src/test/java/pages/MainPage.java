@@ -12,7 +12,7 @@ import org.openqa.selenium.WebDriver;
 import java.io.ByteArrayInputStream;
 
 public class MainPage extends AbstractPage {
-    private Logger logger = LogManager.getLogger(MainPage.class);
+    private final Logger logger = LogManager.getLogger(MainPage.class);
 
     String eventsEpamUrl = "https://events.epam.com";
     By eventsPage = By.xpath("//a[@class='nav-link'][@href='/events']");

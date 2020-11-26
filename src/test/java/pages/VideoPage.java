@@ -1,16 +1,20 @@
 package pages;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public class VideoPage extends AbstractPage{
+    private final Logger logger = LogManager.getLogger(VideoPage.class);
+
     By moreFilters = By.xpath("//div[@class='evnt-toggle-filters-button evnt-button btn']");
     By categoryButton = By.xpath("//div[@id='filter_category']");
     By locationButton = By.xpath("//div[@id='filter_location']");
@@ -33,16 +37,25 @@ public class VideoPage extends AbstractPage{
         waitForElement(moreFilters).click();
     }
 
+    @Step("Filtering by category")
     public void clickCategory() {
-        waitForElement(categoryButton).click();
+        WebElement element = waitForElement(categoryButton);
+        element.click();
+        logger.info("Filtered by category: " + element.getText());
     }
 
+    @Step("Filtering by location")
     public void clickLocation() {
-        waitForElement(locationButton).click();;
+        WebElement element = waitForElement(locationButton);
+        element.click();
+        logger.info("Filtered by location: " + element.getText());
     }
 
+    @Step("Filtering by language")
     public void clickLanguage() {
-        waitForElement(languageButton).click();;
+        WebElement element = waitForElement(languageButton);
+        element.click();
+        logger.info("Filtered by language: " + element.getText());
     }
 
     public void chooseTestingVariant() {
@@ -91,12 +104,16 @@ public class VideoPage extends AbstractPage{
         }
     }
 
+    @Step("Search by name")
     public void searchByName(String name) {
         WebElement searchElement = waitForElement(search);
         searchElement.sendKeys(name);
         waitForElement(By.xpath("//div[@class='evnt-card-body']//*[contains(text(), 'QA')]"));
+        Allure.addAttachment("Searching videos",
+                new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
     }
 
+    @Step("Checking each card")
     public void checkCardsTitle(String name) {
         List<WebElement> cards = waitForElements(eventTalkCards);
         int cardsCount = cards.size();
@@ -106,6 +123,8 @@ public class VideoPage extends AbstractPage{
 
             waitForElements(eventTalkCards).get(i).click();
             WebElement title = waitForElement(eventCardPageTitle);
+            Allure.addAttachment("Each card page",
+                    new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
             Assert.assertTrue(title.getText().toLowerCase().contains(name.toLowerCase()));
 
             driver.navigate().back();
